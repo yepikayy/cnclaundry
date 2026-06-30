@@ -273,7 +273,7 @@ export default function OrderPage() {
                   {([
                     { label: "Nama Lengkap", field: "name" as const, type: "text", placeholder: "Budi Santoso" },
                     { label: "Nomor Telepon", field: "phone" as const, type: "tel", placeholder: "+62 812-3456-7890" },
-                    { label: "Alamat Penjemputan", field: "address" as const, type: "text", placeholder: "Jl. Merdeka No. 5, Jakarta" },
+                    { label: "Alamat Penjemputan", field: "address" as const, type: "text", placeholder: "Jl. Ir Juanda Mamuju, Tabalong" },
                   ]).map(({ label, field, type, placeholder }) => (
                     <div key={field}>
                       <label className="block text-sm font-medium text-slate-700 mb-2">{label}</label>

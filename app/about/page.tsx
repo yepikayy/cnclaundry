@@ -31,18 +31,18 @@ const values = [
   {
     icon: Users,
     title: "Fokus pada Komunitas",
-    desc: "Tim lokal, dampak lokal. Kami bermitra dengan komunitas di seluruh Jakarta.",
+    desc: "Tim lokal, dampak lokal. Kami bermitra dengan komunitas di Kalimantan Selatan.",
     color: "text-violet-500",
     bg: "bg-violet-50",
   },
 ];
 
 const milestones = [
-  { year: "2019", event: "CNC Laundry didirikan dengan 3 mesin dan 1 sepeda motor pengiriman di Jakarta Selatan." },
+  { year: "2019", event: "CNC Laundry didirikan dengan 3 mesin dan 1 sepeda motor pengiriman di Tabalong, Kalimantan Selatan." },
   { year: "2020", event: "Meluncurkan layanan antar jemput. Mencapai 1.000 pelanggan puas dalam 6 bulan." },
   { year: "2021", event: "Membuka fasilitas kedua. Memperkenalkan dry cleaning dan cuci sepatu." },
-  { year: "2022", event: "Mencapai 20.000 pelanggan. Meraih penghargaan 'Laundry Terbaik' di Jakarta." },
-  { year: "2023", event: "Ekspansi ke Tangerang dan Bekasi. Meluncurkan pelacakan pesanan real-time." },
+  { year: "2022", event: "Mencapai 20.000 pelanggan. Meraih penghargaan 'Laundry Terbaik' di Kalimantan Selatan." },
+  { year: "2023", event: "Ekspansi ke wilayah Tabalong dan sekitarnya. Meluncurkan pelacakan pesanan real-time." },
   { year: "2024", event: "Melayani 50.000+ pelanggan per bulan. Tersertifikasi operasi ramah lingkungan." },
 ];
 
