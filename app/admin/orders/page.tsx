@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Trash2, Search, Filter } from "lucide-react";
+import { Trash2, Search, Filter, MessageCircle, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
 import { AdminDialog } from "@/components/admin/AdminDialog";
+import { waLink } from "@/lib/config";
 
 interface Order {
   id: string; service_slug: string; service_name: string;
@@ -22,6 +23,13 @@ const statusColor: Record<string, string> = {
 };
 
 const STATUSES = ["semua", "pending", "confirmed", "processing", "completed", "cancelled"];
+
+const waChatMessage = (o: { customer_name: string; service_name: string }) =>
+  `Halo ${o.customer_name}, ini CnC Laundry mengenai pesanan *${o.service_name}* Anda. `;
+
+const waDoneMessage = (o: { customer_name: string; service_name: string }) =>
+  `Halo ${o.customer_name}, pesanan *${o.service_name}* Anda di CnC Laundry sudah *SELESAI* dan siap diantar/diambil. ` +
+  `Berikut kami lampirkan foto hasil laundry Anda. Terima kasih sudah mempercayakan cucian Anda kepada CnC Laundry! 🙏`;
 
 export default function AdminOrdersPage() {
   const [data, setData] = useState<Order[]>([]);
@@ -123,7 +131,10 @@ export default function AdminOrdersPage() {
                     </td>
                     <td className="px-5 py-3 text-slate-400 text-xs whitespace-nowrap">{fmt(row.created_at)}</td>
                     <td className="px-5 py-3" onClick={(e) => e.stopPropagation()}>
-                      <button onClick={() => setDeleteTarget(row)} aria-label="Hapus pesanan" className="p-1.5 rounded-lg hover:bg-red-50 text-slate-400 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+                      <div className="flex gap-1">
+                        <a href={waLink(row.phone, waChatMessage(row))} target="_blank" rel="noopener noreferrer" aria-label="Chat WhatsApp customer" className="p-1.5 rounded-lg hover:bg-emerald-50 text-slate-400 hover:text-emerald-500 transition-colors"><MessageCircle className="w-4 h-4" /></a>
+                        <button onClick={() => setDeleteTarget(row)} aria-label="Hapus pesanan" className="p-1.5 rounded-lg hover:bg-red-50 text-slate-400 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -153,6 +164,32 @@ export default function AdminOrdersPage() {
                 <span className="text-sm text-slate-700">{value}</span>
               </div>
             ))}
+
+            {/* Aksi WhatsApp ke customer */}
+            <div className="pt-4 mt-1 border-t border-slate-100 space-y-2">
+              <span className="text-xs text-slate-400 font-medium uppercase tracking-wide">Hubungi Customer (WhatsApp)</span>
+              <div className="grid grid-cols-1 gap-2">
+                <a
+                  href={waLink(detail.phone, waChatMessage(detail))}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 py-2.5 rounded-xl border border-emerald-200 text-emerald-600 text-sm font-medium hover:bg-emerald-50 transition-colors"
+                >
+                  <MessageCircle className="w-4 h-4" /> Chat / Update Pesanan
+                </a>
+                <a
+                  href={waLink(detail.phone, waDoneMessage(detail))}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-emerald-500 text-white text-sm font-semibold hover:bg-emerald-600 transition-colors"
+                >
+                  <CheckCircle2 className="w-4 h-4" /> Kirim Foto &quot;Pesanan Selesai&quot;
+                </a>
+              </div>
+              <p className="text-xs text-slate-400">
+                Pesan otomatis terisi. Lampirkan foto hasil laundry langsung di WhatsApp.
+              </p>
+            </div>
           </div>
         )}
       </AdminDialog>

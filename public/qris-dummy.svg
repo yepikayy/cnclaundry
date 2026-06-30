@@ -1,0 +1,58 @@
+<svg width="360" height="470" viewBox="0 0 360 470" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="360" height="470" rx="20" fill="white"/>
+  <rect x="0.5" y="0.5" width="359" height="469" rx="19.5" stroke="#e2e8f0"/>
+
+  <!-- Header bar -->
+  <rect x="20" y="20" width="320" height="56" rx="12" fill="#0f172a"/>
+  <text x="40" y="55" font-family="Arial, sans-serif" font-size="26" font-weight="bold" fill="white">QR<tspan fill="#ef4444">IS</tspan></text>
+  <text x="320" y="52" text-anchor="end" font-family="Arial, sans-serif" font-size="12" fill="#94a3b8">Sumber dana</text>
+
+  <!-- Merchant -->
+  <text x="180" y="108" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#0f172a">CnC Laundry</text>
+  <text x="180" y="128" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#64748b">NMID : ID00000000000 · Barabai</text>
+
+  <!-- QR code area -->
+  <rect x="60" y="148" width="240" height="240" rx="8" fill="white" stroke="#e2e8f0"/>
+
+  <!-- Finder patterns -->
+  <g fill="#0f172a">
+    <rect x="76" y="164" width="48" height="48"/>
+    <rect x="236" y="164" width="48" height="48"/>
+    <rect x="76" y="324" width="48" height="48"/>
+  </g>
+  <g fill="white">
+    <rect x="84" y="172" width="32" height="32"/>
+    <rect x="244" y="172" width="32" height="32"/>
+    <rect x="84" y="332" width="32" height="32"/>
+  </g>
+  <g fill="#0f172a">
+    <rect x="92" y="180" width="16" height="16"/>
+    <rect x="252" y="180" width="16" height="16"/>
+    <rect x="92" y="340" width="16" height="16"/>
+  </g>
+
+  <!-- Faux data modules -->
+  <g fill="#0f172a">
+    <rect x="140" y="164" width="12" height="12"/><rect x="164" y="164" width="12" height="12"/><rect x="200" y="164" width="12" height="12"/>
+    <rect x="152" y="176" width="12" height="12"/><rect x="188" y="176" width="12" height="12"/><rect x="212" y="176" width="12" height="12"/>
+    <rect x="140" y="188" width="12" height="12"/><rect x="176" y="188" width="12" height="12"/><rect x="200" y="188" width="12" height="12"/>
+    <rect x="164" y="200" width="12" height="12"/><rect x="188" y="200" width="12" height="12"/><rect x="212" y="200" width="12" height="12"/>
+    <rect x="140" y="224" width="12" height="12"/><rect x="164" y="224" width="12" height="12"/><rect x="188" y="224" width="12" height="12"/><rect x="224" y="224" width="12" height="12"/><rect x="260" y="224" width="12" height="12"/>
+    <rect x="152" y="236" width="12" height="12"/><rect x="200" y="236" width="12" height="12"/><rect x="236" y="236" width="12" height="12"/><rect x="272" y="236" width="12" height="12"/>
+    <rect x="140" y="248" width="12" height="12"/><rect x="176" y="248" width="12" height="12"/><rect x="212" y="248" width="12" height="12"/><rect x="248" y="248" width="12" height="12"/>
+    <rect x="164" y="260" width="12" height="12"/><rect x="200" y="260" width="12" height="12"/><rect x="224" y="260" width="12" height="12"/><rect x="260" y="260" width="12" height="12"/>
+    <rect x="140" y="272" width="12" height="12"/><rect x="188" y="272" width="12" height="12"/><rect x="236" y="272" width="12" height="12"/><rect x="272" y="272" width="12" height="12"/>
+    <rect x="152" y="296" width="12" height="12"/><rect x="188" y="296" width="12" height="12"/><rect x="224" y="296" width="12" height="12"/><rect x="260" y="296" width="12" height="12"/>
+    <rect x="140" y="308" width="12" height="12"/><rect x="176" y="308" width="12" height="12"/><rect x="212" y="308" width="12" height="12"/><rect x="248" y="308" width="12" height="12"/>
+    <rect x="164" y="332" width="12" height="12"/><rect x="200" y="332" width="12" height="12"/><rect x="236" y="332" width="12" height="12"/><rect x="272" y="332" width="12" height="12"/>
+    <rect x="152" y="344" width="12" height="12"/><rect x="188" y="344" width="12" height="12"/><rect x="224" y="344" width="12" height="12"/><rect x="260" y="344" width="12" height="12"/>
+    <rect x="140" y="356" width="12" height="12"/><rect x="176" y="356" width="12" height="12"/><rect x="212" y="356" width="12" height="12"/><rect x="248" y="356" width="12" height="12"/><rect x="272" y="356" width="12" height="12"/>
+  </g>
+
+  <!-- Dummy watermark -->
+  <text x="180" y="278" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#ef4444" opacity="0.25" transform="rotate(-18 180 278)">QRIS DUMMY</text>
+
+  <!-- Footer note -->
+  <text x="180" y="418" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#94a3b8">Contoh / dummy — ganti dengan QRIS asli CnC</text>
+  <text x="180" y="444" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#cbd5e1">Dapat dibayar dengan semua e-wallet &amp; m-banking</text>
+</svg>

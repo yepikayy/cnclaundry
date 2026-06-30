@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { CalendarCheck, MapPin, Package, Check, ChevronRight, Minus, Plus } from "lucide-react";
+import { CalendarCheck, MapPin, Package, Check, ChevronRight, Minus, Plus, MessageCircle } from "lucide-react";
 import { FloatingBubbles } from "@/components/effects/FloatingBubbles";
 import { ErrorMessage } from "@/components/ui/StateComponents";
 import { createOrder } from "@/lib/db";
 import { priceCategories, formatPrice } from "@/lib/price-list";
+import { LAUNDRY_WHATSAPP, QRIS_IMAGE, waLink } from "@/lib/config";
 
 const STEPS = ["Layanan", "Jadwal", "Alamat", "Konfirmasi"];
 const TIME_SLOTS = ["08:00 – 10:00", "10:00 – 12:00", "13:00 – 15:00", "15:00 – 17:00", "17:00 – 19:00"];
@@ -121,13 +123,21 @@ export default function OrderPage() {
   };
 
   if (submitted) {
+    const payMessage =
+      `Halo CnC Laundry, saya ingin konfirmasi pembayaran pesanan:\n` +
+      `• Nama: ${form.name}\n` +
+      `• Layanan: ${form.service_name}\n` +
+      `• Estimasi: ${estimateLabel}\n` +
+      `• Jemput: ${form.date} ${form.time}\n\n` +
+      `Berikut saya lampirkan bukti pembayarannya. Terima kasih 🙏`;
+
     return (
-      <div className="min-h-screen hero-gradient flex items-center justify-center px-4 pt-16">
+      <div className="min-h-screen hero-gradient flex items-center justify-center px-4 py-24">
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: "spring", stiffness: 200 }}
-          className="glass rounded-3xl p-12 max-w-md w-full text-center shadow-2xl shadow-sky-100"
+          className="glass rounded-3xl p-8 sm:p-10 max-w-md w-full text-center shadow-2xl shadow-sky-100"
         >
           <motion.div
             animate={{ rotate: [0, 10, -10, 0] }}
@@ -138,9 +148,9 @@ export default function OrderPage() {
           </motion.div>
           <h2 className="text-3xl font-bold text-slate-800 mb-3">Pesanan Diterima!</h2>
           <p className="text-slate-500 mb-6">
-            Kami akan mengirimkan konfirmasi ke nomor telepon Anda. Kurir kami akan tiba sesuai waktu yang dipilih.
+            Selesaikan pembayaran di bawah ini, lalu kirim bukti via WhatsApp agar pesanan Anda kami proses.
           </p>
-          <div className="bg-sky-50 rounded-2xl p-4 text-left mb-8 space-y-2">
+          <div className="bg-sky-50 rounded-2xl p-4 text-left mb-6 space-y-2">
             <div className="text-xs text-slate-400 font-medium uppercase tracking-wide mb-3">Ringkasan Pesanan</div>
             {[
               ["Layanan", form.service_name],
@@ -155,9 +165,40 @@ export default function OrderPage() {
               </div>
             ))}
           </div>
+
+          {/* Pembayaran QRIS */}
+          <div className="border-t border-slate-200 pt-6 mb-6">
+            <h3 className="font-bold text-slate-800 mb-1">Pembayaran QRIS</h3>
+            <p className="text-slate-500 text-sm mb-4">
+              Scan QRIS berikut dengan e-wallet atau m-banking Anda.
+            </p>
+            <div className="flex justify-center mb-4">
+              <Image
+                src={QRIS_IMAGE}
+                alt="QRIS CnC Laundry"
+                width={240}
+                height={313}
+                unoptimized
+                className="rounded-2xl border border-slate-100 shadow-sm w-56 h-auto"
+              />
+            </div>
+            <a href={waLink(LAUNDRY_WHATSAPP, payMessage)} target="_blank" rel="noopener noreferrer">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full py-3 rounded-xl bg-emerald-500 text-white font-semibold hover:bg-emerald-600 transition-colors flex items-center justify-center gap-2"
+              >
+                <MessageCircle className="w-4 h-4" /> Sudah Bayar? Kirim Bukti via WhatsApp
+              </motion.button>
+            </a>
+            <p className="text-xs text-slate-400 mt-2">
+              Tombol akan membuka WhatsApp. Lampirkan screenshot bukti transfer Anda di sana.
+            </p>
+          </div>
+
           <button
             onClick={() => { setSubmitted(false); setStep(0); setForm(emptyForm); setCatIdx(0); setQty(1); }}
-            className="w-full py-3 rounded-xl bg-sky-500 text-white font-semibold hover:bg-sky-600 transition-colors"
+            className="w-full py-3 rounded-xl border border-slate-200 text-slate-600 font-semibold hover:bg-slate-50 transition-colors"
           >
             Buat Pesanan Lain
           </button>
