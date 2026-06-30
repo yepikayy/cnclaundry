@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Waves, MapPin, Phone, Mail, Clock } from "lucide-react";
+import { Waves, MapPin, Mail, Clock } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "Beranda" },
@@ -55,11 +55,7 @@ export function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start gap-3 text-sm text-slate-400">
                 <MapPin className="w-4 h-4 text-sky-400 mt-0.5 shrink-0" />
-                <span>Jl. Bersih No. 12, Jakarta Selatan, Indonesia</span>
-              </li>
-              <li className="flex items-center gap-3 text-sm text-slate-400">
-                <Phone className="w-4 h-4 text-sky-400 shrink-0" />
-                <a href="tel:+6281234567890" className="hover:text-sky-400 transition-colors">+62 812-3456-7890</a>
+                <span>Jl. Ir Juanda Mamuju, Pembataan, Kec. Murung Pudak, Kab. Tabalong, Kalimantan Selatan 71571</span>
               </li>
               <li className="flex items-center gap-3 text-sm text-slate-400">
                 <Mail className="w-4 h-4 text-sky-400 shrink-0" />

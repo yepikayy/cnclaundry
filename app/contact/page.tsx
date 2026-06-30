@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, Clock, Send, Check } from "lucide-react";
+import { MapPin, Mail, Clock, Send, Check } from "lucide-react";
 import { ScrollReveal } from "@/components/effects/ScrollReveal";
 import { FloatingBubbles } from "@/components/effects/FloatingBubbles";
 
@@ -10,17 +10,9 @@ const contactInfo = [
   {
     icon: MapPin,
     label: "Alamat",
-    value: "Jl. Bersih No. 12, Kebayoran Baru, Jakarta Selatan 12110",
+    value: "Jl. Ir Juanda Mamuju, Pembataan, Kec. Murung Pudak, Kab. Tabalong, Kalimantan Selatan 71571",
     color: "text-sky-500",
     bg: "bg-sky-50",
-  },
-  {
-    icon: Phone,
-    label: "Telepon",
-    value: "+62 812-3456-7890",
-    href: "tel:+6281234567890",
-    color: "text-cyan-500",
-    bg: "bg-cyan-50",
   },
   {
     icon: Mail,
@@ -33,7 +25,7 @@ const contactInfo = [
   {
     icon: Clock,
     label: "Jam Buka",
-    value: "Sen–Jum 07:00–21:00 · Sabtu 08:00–20:00 · Minggu 09:00–18:00",
+    value: "Setiap hari · Cek Google Maps untuk jam terbaru",
     color: "text-violet-500",
     bg: "bg-violet-50",
   },
@@ -209,6 +201,34 @@ export default function ContactPage() {
               </ScrollReveal>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Maps Section */}
+      <section className="py-20 section-gradient">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal className="text-center mb-10">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 tracking-tight mb-3">
+              Lokasi <span className="text-gradient">Kami</span>
+            </h2>
+            <p className="text-slate-500">
+              Jl. Ir Juanda Mamuju, Pembataan, Kec. Murung Pudak, Kab. Tabalong, Kalimantan Selatan 71571
+            </p>
+          </ScrollReveal>
+          <ScrollReveal delay={0.1}>
+            <div className="rounded-3xl overflow-hidden border border-sky-100 shadow-xl shadow-sky-50 h-[420px]">
+              <iframe
+                src="https://maps.google.com/maps?q=Jl.+Ir+Juanda+Mamuju,+Pembataan,+Kec.+Murung+Pudak,+Kabupaten+Tabalong,+Kalimantan+Selatan+71571&output=embed&z=16"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Lokasi CNC Laundry"
+              />
+            </div>
+          </ScrollReveal>
         </div>
       </section>
     </>
