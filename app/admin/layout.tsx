@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 
@@ -8,7 +7,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const supabase = await createSupabaseServer();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user) redirect("/admin/login");
+  // proxy.ts handles unauthenticated redirects — no redirect here to avoid loop on /admin/login
+  if (!user) {
+    return <>{children}</>;
+  }
 
   return (
     <div className="flex min-h-screen bg-slate-50">
