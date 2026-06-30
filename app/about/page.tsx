@@ -47,8 +47,8 @@ const milestones = [
 ];
 
 const team = [
-  { name: "Andi Prasetyo", role: "Pendiri & CEO", avatar: "AP", color: "from-sky-400 to-sky-600" },
-  { name: "Rina Kurniawan", role: "Kepala Operasional", avatar: "RK", color: "from-cyan-400 to-cyan-600" },
+  { name: "Irma Setiawati", role: "Pendiri & CEO", avatar: "IS", color: "from-sky-400 to-sky-600" },
+  { name: "Intan Mulyani", role: "Kepala Operasional", avatar: "IM", color: "from-cyan-400 to-cyan-600" },
   { name: "Dimas Haryanto", role: "Teknisi Utama", avatar: "DH", color: "from-blue-400 to-blue-600" },
   { name: "Siti Rahma", role: "Pengalaman Pelanggan", avatar: "SR", color: "from-violet-400 to-violet-600" },
 ];
