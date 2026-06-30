@@ -108,7 +108,7 @@ export function Hero() {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-sky-200/60 text-sky-700 text-sm font-medium mb-6"
           >
             <Star className="w-3.5 h-3.5 fill-sky-400 text-sky-400" />
-            Laundry Terbaik #1 di Barabai
+            Laundry Terbaik di Bali
           </motion.div>
 
           <motion.h1
