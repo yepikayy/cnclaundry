@@ -218,7 +218,7 @@ export default function ContactPage() {
           <ScrollReveal delay={0.1}>
             <div className="rounded-3xl overflow-hidden border border-sky-100 shadow-xl shadow-sky-50 h-[420px]">
               <iframe
-                src="https://maps.google.com/maps?q=Jl.+Ir+Juanda+Mamuju,+Pembataan,+Kec.+Murung+Pudak,+Kabupaten+Tabalong,+Kalimantan+Selatan+71571&output=embed&z=16"
+                src="https://maps.google.com/maps?q=-2.5820054,115.3855513&z=17&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
