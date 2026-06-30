@@ -1,11 +1,9 @@
 import { FloatingBubbles } from "@/components/effects/FloatingBubbles";
 import { ServicesList } from "@/components/services/ServicesList";
 import { CTA } from "@/components/home/CTA";
-import { getServices } from "@/lib/db";
+import { services } from "@/lib/services-data";
 
-export default async function ServicesPage() {
-  const services = await getServices();
-
+export default function ServicesPage() {
   return (
     <>
       <section className="relative pt-32 pb-20 hero-gradient overflow-hidden">

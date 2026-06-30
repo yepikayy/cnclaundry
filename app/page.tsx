@@ -6,12 +6,11 @@ import { HowItWorks } from "@/components/home/HowItWorks";
 import { Testimonials } from "@/components/home/Testimonials";
 import { FAQ } from "@/components/home/FAQ";
 import { CTA } from "@/components/home/CTA";
-import { getServices, getPricingPlans, getTestimonials, getFAQs } from "@/lib/db";
+import { services } from "@/lib/services-data";
+import { getTestimonials, getFAQs } from "@/lib/db";
 
 export default async function HomePage() {
-  const [services, pricing, testimonials, faqs] = await Promise.all([
-    getServices(),
-    getPricingPlans(),
+  const [testimonials, faqs] = await Promise.all([
     getTestimonials(),
     getFAQs(),
   ]);
@@ -22,7 +21,7 @@ export default async function HomePage() {
       <Features />
       <ServicesPreview data={services} />
       <HowItWorks />
-      <PricingPreview data={pricing} />
+      <PricingPreview data={services} />
       <Testimonials data={testimonials} />
       <FAQ data={faqs} />
       <CTA />

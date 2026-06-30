@@ -1,16 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CalendarCheck, MapPin, Package, Check, ChevronRight } from "lucide-react";
+import { CalendarCheck, MapPin, Package, Check, ChevronRight, Minus, Plus } from "lucide-react";
 import { FloatingBubbles } from "@/components/effects/FloatingBubbles";
-import { LoadingSpinner, ErrorMessage } from "@/components/ui/StateComponents";
-import { supabase } from "@/lib/supabase";
+import { ErrorMessage } from "@/components/ui/StateComponents";
 import { createOrder } from "@/lib/db";
-import type { Service } from "@/lib/db";
+import { priceCategories, formatPrice } from "@/lib/price-list";
 
 const STEPS = ["Layanan", "Jadwal", "Alamat", "Konfirmasi"];
 const TIME_SLOTS = ["08:00 – 10:00", "10:00 – 12:00", "13:00 – 15:00", "15:00 – 17:00", "17:00 – 19:00"];
+
+const slugify = (s: string) =>
+  s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 
 function StepIndicator({ step, current }: { step: number; current: number }) {
   const done = step < current;
@@ -50,32 +52,50 @@ const emptyForm: FormState = {
 export default function OrderPage() {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<FormState>(emptyForm);
-  const [services, setServices] = useState<Service[]>([]);
-  const [loadingServices, setLoadingServices] = useState(true);
+  const [catIdx, setCatIdx] = useState(0);
+  const [qty, setQty] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    supabase
-      .from("services")
-      .select("id, slug, name, price, turnaround, subtitle, description, features, badge, badge_color, gradient, light_bg, display_order")
-      .eq("active", true)
-      .order("display_order")
-      .then(({ data, error }) => {
-        if (!error && data) setServices(data);
-        setLoadingServices(false);
-      });
-  }, []);
+  const category = priceCategories[catIdx];
+  const item = category.items.find((i) => i.name === form.service_name) ?? null;
+  const isCustom = !!item && item.price === null;
+  const unit = item?.unit ?? "item";
+  const estimate = item && item.price !== null ? item.price * qty : 0;
+  const estimateLabel = isCustom
+    ? "Menyesuaikan kondisi"
+    : item
+      ? formatPrice(estimate)
+      : "";
 
   const set = (field: keyof FormState, value: string) =>
     setForm((f) => ({ ...f, [field]: value }));
+
+  const selectCategory = (i: number) => {
+    setCatIdx(i);
+    setQty(1);
+    setForm((f) => ({ ...f, service_slug: "", service_name: "" }));
+  };
+  const selectItem = (name: string) => {
+    setQty(1);
+    setForm((f) => ({ ...f, service_slug: slugify(name), service_name: name }));
+  };
 
   const canNext = () => {
     if (step === 0) return !!form.service_slug;
     if (step === 1) return !!form.date && !!form.time;
     if (step === 2) return !!form.name.trim() && !!form.phone.trim() && !!form.address.trim();
     return true;
+  };
+
+  const buildNotes = () => {
+    const estimateNote = item
+      ? isCustom
+        ? `${item.name} — harga menyesuaikan kondisi`
+        : `Estimasi: ${qty} ${unit} × ${item.name} = ${formatPrice(estimate)}`
+      : "";
+    return [form.notes.trim(), estimateNote].filter(Boolean).join(" | ") || undefined;
   };
 
   const handleSubmit = async () => {
@@ -90,7 +110,7 @@ export default function OrderPage() {
         customer_name: form.name,
         phone: form.phone,
         address: form.address,
-        notes: form.notes || undefined,
+        notes: buildNotes(),
       });
       setSubmitted(true);
     } catch (e: unknown) {
@@ -124,18 +144,19 @@ export default function OrderPage() {
             <div className="text-xs text-slate-400 font-medium uppercase tracking-wide mb-3">Ringkasan Pesanan</div>
             {[
               ["Layanan", form.service_name],
+              ["Estimasi", estimateLabel],
               ["Tanggal", form.date],
               ["Waktu", form.time],
               ["Nama", form.name],
             ].map(([label, value]) => (
-              <div key={label} className="flex justify-between text-sm">
-                <span className="text-slate-500">{label}</span>
-                <span className="text-slate-700 font-medium">{value}</span>
+              <div key={label} className="flex justify-between text-sm gap-4">
+                <span className="text-slate-500 shrink-0">{label}</span>
+                <span className="text-slate-700 font-medium text-right">{value}</span>
               </div>
             ))}
           </div>
           <button
-            onClick={() => { setSubmitted(false); setStep(0); setForm(emptyForm); }}
+            onClick={() => { setSubmitted(false); setStep(0); setForm(emptyForm); setCatIdx(0); setQty(1); }}
             className="w-full py-3 rounded-xl bg-sky-500 text-white font-semibold hover:bg-sky-600 transition-colors"
           >
             Buat Pesanan Lain
@@ -189,36 +210,107 @@ export default function OrderPage() {
                   <Package className="w-5 h-5 text-sky-500" />
                   <h2 className="text-xl font-bold text-slate-800">Pilih Layanan</h2>
                 </div>
-                {loadingServices ? (
-                  <LoadingSpinner text="Memuat layanan..." />
-                ) : services.length === 0 ? (
-                  <p className="text-slate-400 text-sm text-center py-8">Layanan tidak tersedia.</p>
-                ) : (
-                  <div className="grid sm:grid-cols-2 gap-3">
-                    {services.map((s) => (
+
+                {/* Kategori */}
+                <div className="flex flex-wrap gap-2 mb-5">
+                  {priceCategories.map((cat, i) => {
+                    const Icon = cat.icon;
+                    const active = i === catIdx;
+                    return (
+                      <button
+                        key={cat.title}
+                        onClick={() => selectCategory(i)}
+                        className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-sm font-medium transition-all ${
+                          active
+                            ? "bg-sky-500 text-white shadow-md shadow-sky-100"
+                            : "bg-slate-50 text-slate-600 hover:bg-sky-50 hover:text-sky-600"
+                        }`}
+                      >
+                        <Icon className="w-3.5 h-3.5" />
+                        {cat.title}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Item */}
+                <div className="grid sm:grid-cols-2 gap-3">
+                  {category.items.map((it) => {
+                    const active = it.name === form.service_name;
+                    return (
                       <motion.button
-                        key={s.id}
+                        key={it.name}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        onClick={() => { set("service_slug", s.slug); set("service_name", s.name); }}
-                        className={`p-5 rounded-2xl border-2 text-left transition-all ${
-                          form.service_slug === s.slug
+                        onClick={() => selectItem(it.name)}
+                        className={`p-4 rounded-2xl border-2 text-left transition-all ${
+                          active
                             ? "border-sky-400 bg-sky-50 shadow-md shadow-sky-100"
                             : "border-slate-100 hover:border-sky-200"
                         }`}
                       >
-                        <div className="font-semibold text-slate-800 mb-1">{s.name}</div>
-                        <div className="text-sky-500 text-sm font-medium">{s.price}</div>
-                        <div className="text-slate-400 text-xs mt-1">{s.turnaround}</div>
-                        {form.service_slug === s.slug && (
+                        <div className="font-semibold text-slate-800 text-sm mb-1">{it.name}</div>
+                        <div className="text-sky-500 text-sm font-medium">
+                          {it.price !== null ? `${formatPrice(it.price)}${it.note ?? ""}` : it.note}
+                        </div>
+                        {active && (
                           <div className="mt-2 w-5 h-5 rounded-full bg-sky-500 flex items-center justify-center">
                             <Check className="w-3 h-3 text-white" />
                           </div>
                         )}
                       </motion.button>
-                    ))}
-                  </div>
+                    );
+                  })}
+                </div>
+
+                {/* Jumlah + estimasi */}
+                {item && !isCustom && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-6 p-5 rounded-2xl bg-sky-50 border border-sky-100"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-sm font-medium text-slate-700">Jumlah ({unit})</span>
+                      <div className="flex items-center gap-3 bg-white rounded-full px-1.5 py-1 border border-sky-100">
+                        <button
+                          onClick={() => setQty((q) => Math.max(1, q - 1))}
+                          aria-label="Kurangi"
+                          className="w-7 h-7 rounded-full bg-sky-100 hover:bg-sky-200 text-sky-600 flex items-center justify-center transition-colors"
+                        >
+                          <Minus className="w-3.5 h-3.5" />
+                        </button>
+                        <span className="w-6 text-center font-semibold tabular-nums text-slate-700">{qty}</span>
+                        <button
+                          onClick={() => setQty((q) => q + 1)}
+                          aria-label="Tambah"
+                          className="w-7 h-7 rounded-full bg-sky-100 hover:bg-sky-200 text-sky-600 flex items-center justify-center transition-colors"
+                        >
+                          <Plus className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="flex items-baseline justify-between border-t border-sky-100 pt-3">
+                      <span className="text-sm text-slate-600">Estimasi total</span>
+                      <span className="text-2xl font-black text-sky-600 tabular-nums">{formatPrice(estimate)}</span>
+                    </div>
+                  </motion.div>
                 )}
+
+                {item && isCustom && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-6 p-5 rounded-2xl bg-sky-50 border border-sky-100 text-sm text-slate-600"
+                  >
+                    Harga untuk layanan ini menyesuaikan tingkat kesulitan & kondisi barang. Tim kami akan
+                    mengonfirmasi estimasi pastinya saat penjemputan.
+                  </motion.div>
+                )}
+
+                <p className="text-xs text-slate-400 mt-4">
+                  *Estimasi. Harga akhir menyesuaikan kondisi & jumlah aktual barang saat penimbangan.
+                </p>
               </motion.div>
             )}
 
@@ -309,6 +401,7 @@ export default function OrderPage() {
                 <div className="bg-sky-50 rounded-2xl p-6 space-y-4 mb-6">
                   {([
                     ["Layanan", form.service_name],
+                    ["Estimasi", estimateLabel],
                     ["Tanggal", form.date],
                     ["Slot Waktu", form.time],
                     ["Nama", form.name],
