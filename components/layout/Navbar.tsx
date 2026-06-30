@@ -11,6 +11,7 @@ const links = [
   { href: "/services", label: "Layanan" },
   { href: "/pricing", label: "Harga" },
   { href: "/order", label: "Pesan" },
+  { href: "/gallery", label: "Galeri" },
   { href: "/about", label: "Tentang" },
   { href: "/contact", label: "Kontak" },
 ];
