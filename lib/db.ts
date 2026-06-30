@@ -122,12 +122,7 @@ export async function getGallery(): Promise<GalleryItem[]> {
   return data ?? [];
 }
 
-export async function createOrder(order: OrderInsert): Promise<string> {
-  const { data, error } = await supabase
-    .from("orders")
-    .insert(order)
-    .select("id")
-    .single();
+export async function createOrder(order: OrderInsert): Promise<void> {
+  const { error } = await supabase.from("orders").insert(order);
   if (error) throw new Error(error.message);
-  return data.id;
 }
