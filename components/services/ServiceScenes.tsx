@@ -143,11 +143,20 @@ const scenes: Record<string, ReactNode> = {
         </g>
       </g>
       {/* Sneaker */}
-      <g transform="translate(210 210)">
-        <path d="M0 30 q10 -40 60 -34 q10 20 40 24 q30 4 40 18 l0 10 l-140 0 z" fill="#fff" stroke="#10b981" strokeWidth="2" />
-        <path d="M-2 40 l144 0 l0 8 q-72 8 -144 0 z" fill="#059669" />
-        <path d="M50 -6 q6 14 26 20" stroke="#a7f3d0" strokeWidth="3" fill="none" />
-        <path d="M60 2 q6 12 24 18" stroke="#a7f3d0" strokeWidth="3" fill="none" />
+      <g transform="translate(196 196)">
+        {/* Badan sepatu */}
+        <path d="M6 44 C2 22 20 6 44 8 C58 9 66 20 78 26 C104 37 132 34 150 44 L150 52 L6 52 Z" fill="#fff" stroke="#10b981" strokeWidth="2.5" strokeLinejoin="round" />
+        {/* Sol */}
+        <path d="M2 52 L152 52 C150 64 140 68 128 68 L18 68 C8 68 2 62 2 52 Z" fill="#059669" />
+        <path d="M2 56 L152 56" stroke="#fff" strokeWidth="2" opacity="0.4" />
+        {/* Tumit & lidah */}
+        <path d="M44 8 C34 4 24 8 22 20" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" />
+        {/* Tali */}
+        <path d="M58 20 L70 26 M64 28 L76 33 M70 36 L82 40" stroke="#34d399" strokeWidth="3" strokeLinecap="round" />
+        {/* Detail toe cap */}
+        <path d="M118 40 C126 36 138 38 146 44" fill="none" stroke="#a7f3d0" strokeWidth="2.5" strokeLinecap="round" />
+        {/* Kilau kinclong */}
+        <path d="M90 22 l4 -8 M100 24 l3 -6" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.9" />
       </g>
     </svg>
   ),
