@@ -142,21 +142,32 @@ const scenes: Record<string, ReactNode> = {
           <text x="0" y="34" fontFamily="Arial, sans-serif" fontSize="12" fontWeight="600" opacity="0.9">Laundry</text>
         </g>
       </g>
-      {/* Sneaker */}
-      <g transform="translate(196 196)">
-        {/* Badan sepatu */}
-        <path d="M6 44 C2 22 20 6 44 8 C58 9 66 20 78 26 C104 37 132 34 150 44 L150 52 L6 52 Z" fill="#fff" stroke="#10b981" strokeWidth="2.5" strokeLinejoin="round" />
-        {/* Sol */}
-        <path d="M2 52 L152 52 C150 64 140 68 128 68 L18 68 C8 68 2 62 2 52 Z" fill="#059669" />
-        <path d="M2 56 L152 56" stroke="#fff" strokeWidth="2" opacity="0.4" />
-        {/* Tumit & lidah */}
-        <path d="M44 8 C34 4 24 8 22 20" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" />
-        {/* Tali */}
-        <path d="M58 20 L70 26 M64 28 L76 33 M70 36 L82 40" stroke="#34d399" strokeWidth="3" strokeLinecap="round" />
-        {/* Detail toe cap */}
-        <path d="M118 40 C126 36 138 38 146 44" fill="none" stroke="#a7f3d0" strokeWidth="2.5" strokeLinecap="round" />
+      {/* Sneaker premium (low-top, tampak samping) */}
+      <g transform="translate(188 182)">
+        {/* Bayangan */}
+        <ellipse cx="86" cy="92" rx="82" ry="7" fill="#059669" opacity="0.18" />
+        {/* Outsole */}
+        <path d="M6 74 C4 84 12 88 24 88 L150 88 C162 88 168 82 166 74 Z" fill="#0f766e" />
+        {/* Midsole */}
+        <path d="M2 62 C0 70 4 76 16 76 L156 76 C166 76 170 70 168 62 C150 66 120 66 96 64 C60 61 28 60 2 62 Z" fill="#d1fae5" stroke="#10b981" strokeWidth="1.5" />
+        {/* Upper */}
+        <path d="M10 62 C8 40 22 22 44 18 C56 16 64 22 72 30 L96 52 C120 56 148 54 164 60 C166 64 164 66 156 66 L18 66 C12 66 10 64 10 62 Z" fill="#ffffff" stroke="#10b981" strokeWidth="2.5" strokeLinejoin="round" />
+        {/* Panel samping (swoosh) */}
+        <path d="M70 60 C88 44 112 40 150 52 C150 58 146 60 138 58 C112 52 92 54 78 62 Z" fill="#34d399" />
+        {/* Toe cap */}
+        <path d="M128 66 C132 56 146 56 158 62" fill="none" stroke="#a7f3d0" strokeWidth="2.5" strokeLinecap="round" />
+        {/* Collar & lidah */}
+        <path d="M44 18 C34 16 26 22 24 34 L34 40 C36 30 40 24 50 24 Z" fill="#ecfdf5" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" />
+        {/* Eyelets + tali */}
+        <path d="M40 34 L58 40 M44 42 L62 47 M48 50 L66 54" stroke="#10b981" strokeWidth="3" strokeLinecap="round" />
+        <circle cx="40" cy="34" r="1.8" fill="#0f766e" />
+        <circle cx="44" cy="42" r="1.8" fill="#0f766e" />
+        <circle cx="48" cy="50" r="1.8" fill="#0f766e" />
+        {/* Jahitan sol */}
+        <path d="M8 70 L166 70" stroke="#10b981" strokeWidth="1.2" opacity="0.5" strokeDasharray="3 3" />
         {/* Kilau kinclong */}
-        <path d="M90 22 l4 -8 M100 24 l3 -6" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.9" />
+        <path d="M96 34 l5 -9 M108 38 l4 -7" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" opacity="0.95" />
+        <path d="M100 30 l3 -1" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" opacity="0.8" />
       </g>
     </svg>
   ),
