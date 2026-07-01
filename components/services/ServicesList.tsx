@@ -1,12 +1,24 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import { ScrollReveal } from "@/components/effects/ScrollReveal";
 import { EmptyState } from "@/components/ui/StateComponents";
-import { ServiceScene } from "./ServiceScenes";
 import type { Service } from "@/lib/db";
+
+// Foto per layanan
+const imageMap: Record<string, string> = {
+  "wash-fold":
+    "https://images.unsplash.com/photo-1545173168-9f1947eebb7f?auto=format&fit=crop&w=1000&q=80",
+  "dry-cleaning":
+    "https://images.unsplash.com/photo-1489274495757-95c7c837b101?auto=format&fit=crop&w=1000&q=80",
+  "ironing":
+    "https://images.unsplash.com/photo-1521656693074-0ef32e80a5d5?auto=format&fit=crop&w=1000&q=80",
+  "sneakers":
+    "https://assets.preloved.co.id/products/198979/2a8b0c17-284e-403b-bbc5-a58aaf880e24.jpg",
+};
 
 export function ServicesList({ services }: { services: Service[] }) {
   if (services.length === 0) {
@@ -31,9 +43,16 @@ export function ServicesList({ services }: { services: Service[] }) {
                 transition={{ duration: 0.4 }}
                 className={`group relative rounded-3xl overflow-hidden h-64 lg:h-80 ${svc.light_bg} ${i % 2 === 1 ? "lg:order-2" : ""}`}
               >
-                <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105">
-                  <ServiceScene slug={svc.slug} />
-                </div>
+                {imageMap[svc.slug] && (
+                  <Image
+                    src={imageMap[svc.slug]}
+                    alt={svc.name}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-3">
                   <span className="px-3 py-1.5 rounded-full bg-white/90 backdrop-blur text-slate-700 text-xs font-semibold shadow-sm">
                     ⏱ {svc.turnaround}
