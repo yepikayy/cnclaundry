@@ -5,6 +5,8 @@ import { EmptyState } from "@/components/ui/StateComponents";
 import { CTA } from "@/components/home/CTA";
 import { getGallery } from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 export default async function GalleryPage() {
   const items = await getGallery();
 

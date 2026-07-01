@@ -9,6 +9,8 @@ import { CTA } from "@/components/home/CTA";
 import { services } from "@/lib/services-data";
 import { getTestimonials, getFAQs } from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const [testimonials, faqs] = await Promise.all([
     getTestimonials(),
