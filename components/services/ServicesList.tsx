@@ -1,11 +1,24 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import { ScrollReveal } from "@/components/effects/ScrollReveal";
 import { EmptyState } from "@/components/ui/StateComponents";
 import type { Service } from "@/lib/db";
+
+// Foto per layanan (Unsplash)
+const imageMap: Record<string, string> = {
+  "wash-fold":
+    "https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?auto=format&fit=crop&w=1000&q=80",
+  "dry-cleaning":
+    "https://images.unsplash.com/photo-1489274495757-95c7c837b101?auto=format&fit=crop&w=1000&q=80",
+  "ironing":
+    "https://images.unsplash.com/photo-1521656693074-0ef32e80a5d5?auto=format&fit=crop&w=1000&q=80",
+  "sneakers":
+    "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=1000&q=80",
+};
 
 const iconMap: Record<string, React.ReactNode> = {
   "wash-fold": (
@@ -59,21 +72,29 @@ export function ServicesList({ services }: { services: Service[] }) {
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.4 }}
-                className={`relative rounded-3xl overflow-hidden h-64 lg:h-80 ${svc.light_bg} flex items-center justify-center ${i % 2 === 1 ? "lg:order-2" : ""}`}
+                className={`group relative rounded-3xl overflow-hidden h-64 lg:h-80 ${svc.light_bg} ${i % 2 === 1 ? "lg:order-2" : ""}`}
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${svc.gradient} opacity-10`} />
-                <div className="relative text-center p-10">
-                  <div className="w-16 h-16 mx-auto mb-4 opacity-60">
-                    {iconMap[svc.slug] ?? null}
+                {imageMap[svc.slug] ? (
+                  <Image
+                    src={imageMap[svc.slug]}
+                    alt={svc.name}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 opacity-60">{iconMap[svc.slug] ?? null}</div>
                   </div>
-                  <div className="flex flex-wrap gap-3 justify-center">
-                    <span className="px-3 py-1.5 rounded-full bg-white/80 border border-white text-slate-600 text-xs font-semibold shadow-sm">
-                      ⏱ {svc.turnaround}
-                    </span>
-                    <span className="px-3 py-1.5 rounded-full bg-white/80 border border-white text-slate-600 text-xs font-semibold shadow-sm">
-                      💰 {svc.price}
-                    </span>
-                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-3">
+                  <span className="px-3 py-1.5 rounded-full bg-white/90 backdrop-blur text-slate-700 text-xs font-semibold shadow-sm">
+                    ⏱ {svc.turnaround}
+                  </span>
+                  <span className="px-3 py-1.5 rounded-full bg-white/90 backdrop-blur text-slate-700 text-xs font-semibold shadow-sm">
+                    💰 {svc.price}
+                  </span>
                 </div>
               </motion.div>
 
