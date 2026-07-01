@@ -1,55 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import { ScrollReveal } from "@/components/effects/ScrollReveal";
 import { EmptyState } from "@/components/ui/StateComponents";
+import { ServiceScene } from "./ServiceScenes";
 import type { Service } from "@/lib/db";
-
-// Foto per layanan (Unsplash)
-const imageMap: Record<string, string> = {
-  "wash-fold":
-    "https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?auto=format&fit=crop&w=1000&q=80",
-  "dry-cleaning":
-    "https://images.unsplash.com/photo-1489274495757-95c7c837b101?auto=format&fit=crop&w=1000&q=80",
-  "ironing":
-    "https://images.unsplash.com/photo-1521656693074-0ef32e80a5d5?auto=format&fit=crop&w=1000&q=80",
-  "sneakers":
-    "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=1000&q=80",
-};
-
-const iconMap: Record<string, React.ReactNode> = {
-  "wash-fold": (
-    <svg viewBox="0 0 48 48" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="14" y="12" width="20" height="26" rx="4" fill="white" stroke="rgba(14,165,233,0.6)" strokeWidth="1.5" />
-      <path d="M18 20 Q24 16 30 20" stroke="rgba(14,165,233,0.7)" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-      <circle cx="24" cy="28" r="4" fill="rgba(14,165,233,0.2)" stroke="rgba(14,165,233,0.5)" strokeWidth="1.5" />
-    </svg>
-  ),
-  "dry-cleaning": (
-    <svg viewBox="0 0 48 48" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="12" y="18" width="24" height="16" rx="3" fill="white" stroke="rgba(139,92,246,0.5)" strokeWidth="1.5" />
-      <path d="M16 26 L20 22 L24 26 L28 20 L32 26" stroke="rgba(139,92,246,0.8)" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-      <circle cx="24" cy="14" r="3" fill="rgba(139,92,246,0.3)" />
-    </svg>
-  ),
-  "ironing": (
-    <svg viewBox="0 0 48 48" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M16 20 L32 20 L32 34 Q24 38 16 34 Z" fill="white" stroke="rgba(245,158,11,0.6)" strokeWidth="1.5" />
-      <path d="M14 16 L24 12 L34 16" stroke="rgba(245,158,11,0.7)" strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M20 28 L24 24 L28 28" stroke="rgba(245,158,11,0.6)" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-    </svg>
-  ),
-  "sneakers": (
-    <svg viewBox="0 0 48 48" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="14" y="14" width="20" height="22" rx="6" fill="white" stroke="rgba(16,185,129,0.5)" strokeWidth="1.5" />
-      <circle cx="24" cy="24" r="6" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.5)" strokeWidth="1.5" />
-      <circle cx="24" cy="24" r="2" fill="rgba(16,185,129,0.5)" />
-    </svg>
-  ),
-};
 
 export function ServicesList({ services }: { services: Service[] }) {
   if (services.length === 0) {
@@ -74,20 +31,9 @@ export function ServicesList({ services }: { services: Service[] }) {
                 transition={{ duration: 0.4 }}
                 className={`group relative rounded-3xl overflow-hidden h-64 lg:h-80 ${svc.light_bg} ${i % 2 === 1 ? "lg:order-2" : ""}`}
               >
-                {imageMap[svc.slug] ? (
-                  <Image
-                    src={imageMap[svc.slug]}
-                    alt={svc.name}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-16 h-16 opacity-60">{iconMap[svc.slug] ?? null}</div>
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105">
+                  <ServiceScene slug={svc.slug} />
+                </div>
                 <div className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-3">
                   <span className="px-3 py-1.5 rounded-full bg-white/90 backdrop-blur text-slate-700 text-xs font-semibold shadow-sm">
                     ⏱ {svc.turnaround}
