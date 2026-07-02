@@ -218,7 +218,7 @@ export default function ContactPage() {
           <ScrollReveal delay={0.1}>
             <div className="rounded-3xl overflow-hidden border border-sky-100 shadow-xl shadow-sky-50 h-[420px]">
               <iframe
-                src="https://maps.google.com/maps?q=-2.5821429,115.3875176&z=17&output=embed"
+                src="https://maps.google.com/maps?q=-2.582028,115.385588&z=18&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
