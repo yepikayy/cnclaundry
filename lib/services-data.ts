@@ -9,7 +9,7 @@ export const services: Service[] = [
     name: "Cuci & Lipat",
     subtitle: "Laundry Sehari-hari",
     price: "Mulai Rp 6K / kg",
-    turnaround: "2 hari",
+    turnaround: "3 hari",
     description:
       "Layanan paling populer kami. Pakaian Anda dicuci menggunakan mesin kelas atas dengan detergen ramah lingkungan premium, dikeringkan, lalu dilipat rapi.",
     features: [
