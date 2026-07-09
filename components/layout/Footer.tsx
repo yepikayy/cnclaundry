@@ -12,8 +12,8 @@ const navLinks = [
 
 const hours = [
   { day: "Senin – Jumat", time: "08:00 – 17:30, 19:00 – 21:00" },
-  { day: "Sabtu", time: "08:00 – 20:00" },
-  { day: "Minggu", time: "09:00 – 18:00" },
+  { day: "Sabtu", time: "08:00 – 17:30, 19:00 – 21:00" },
+  { day: "Minggu", time: "08:00 – 17:30, 19:00 – 21:00" },
 ];
 
 export function Footer() {
