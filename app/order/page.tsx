@@ -114,22 +114,28 @@ export default function OrderPage() {
         address: form.address,
         notes: buildNotes(),
       });
-      setSubmitted(true);
     } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : "Gagal menyimpan pesanan. Coba lagi.");
+      // Database tidak bisa dihubungi (mis. env Supabase belum di-set atau project
+      // sedang di-pause). Jangan sampai pesanan hilang — tetap arahkan pelanggan ke
+      // layar konfirmasi agar order dikirim lengkap lewat WhatsApp.
+      console.error("createOrder gagal, lanjut lewat WhatsApp:", e);
     } finally {
       setSubmitting(false);
+      setSubmitted(true);
     }
   };
 
   if (submitted) {
     const payMessage =
-      `Halo CnC Laundry, saya ingin konfirmasi pembayaran pesanan:\n` +
+      `Halo CnC Laundry, saya ingin konfirmasi pesanan:\n` +
       `• Nama: ${form.name}\n` +
+      `• Telepon: ${form.phone}\n` +
       `• Layanan: ${form.service_name}\n` +
       `• Estimasi: ${estimateLabel}\n` +
-      `• Jemput: ${form.date} ${form.time}\n\n` +
-      `Berikut saya lampirkan bukti pembayarannya. Terima kasih 🙏`;
+      `• Jemput: ${form.date}, ${form.time}\n` +
+      `• Alamat: ${form.address}\n` +
+      (form.notes ? `• Catatan: ${form.notes}\n` : "") +
+      `\nBerikut saya lampirkan bukti pembayarannya. Terima kasih 🙏`;
 
     return (
       <div className="min-h-screen hero-gradient flex items-center justify-center px-4 py-24">
